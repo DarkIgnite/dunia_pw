@@ -7,5 +7,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dataperusahaan', [PerusahaanController::class, 'index']);
-
+Route::resource('dataperusahaan', PerusahaanController::class);

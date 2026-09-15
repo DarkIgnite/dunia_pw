@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -8,7 +8,16 @@
 </head>
 <body>
     <div class="container mt-5">
-        <h2 class="mb-4">Data Perusahaan</h2>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Data Perusahaan</h2>
+            <a href="{{ route('dataperusahaan.create') }}" class="btn btn-primary">+ Tambah Data Perusahaan</a>
+        </div>
+
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
 
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
