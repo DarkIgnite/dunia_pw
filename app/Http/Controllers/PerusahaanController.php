@@ -46,10 +46,13 @@ class PerusahaanController extends Controller
         $perusahaan->update($validatedData);
         return redirect()->route('dataperusahaan.index')->with('success', 'Data berhasil diupdate!');
     }
-
-    public function destroy(Perusahaan $perusahaan)
+    
+// fungsi destroy untuk menghapus data
+    public function destroy($id)
     {
+        $perusahaan = Perusahaan::findOrFail($id);
         $perusahaan->delete();
+
         return redirect()->route('dataperusahaan.index')->with('success', 'Data berhasil dihapus!');
     }
 }
