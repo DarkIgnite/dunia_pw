@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -39,6 +39,7 @@
                         <td>{{ $item->alamat }}</td>
                         <td>{{ $item->telepon }}</td>
                         <td>
+                            <a href="{{ route('dataperusahaan.show', $item->id) }}" class="btn btn-info btn-sm text-white">Detail</a>
                             <a href="{{ route('dataperusahaan.edit', $item->id) }}" class="btn btn-primary btn-sm">Edit</a>
                             <form action="{{ route('dataperusahaan.destroy', $item->id) }}" method="post" style="display: inline;">
                                 @csrf

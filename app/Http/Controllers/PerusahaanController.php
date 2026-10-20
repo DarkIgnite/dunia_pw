@@ -30,12 +30,19 @@ class PerusahaanController extends Controller
         return redirect()->route('dataperusahaan.index')->with('success', 'Data berhasil ditambahkan!');
     }
 
-    public function edit(Perusahaan $perusahaan)
+    public function show($id)
     {
-        return view('dataperusahaan.edit', compact('perusahaan'));
+        $perusahaan = Perusahaan::findOrFail($id);
+        return view('dataperusahaan.show', compact('perusahaan'));
+    }
+
+    public function edit($id)
+    {
+        $perusahaan = Perusahaan::findOrFail($id);
+        return view('pageeditdata', compact('perusahaan'));
     }   
 
-    public function update(Request $request, Perusahaan $perusahaan)
+    public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
             'nama_perusahaan' => 'required|string|max:255',
@@ -43,7 +50,10 @@ class PerusahaanController extends Controller
             'alamat' => 'required|string',
             'telepon' => 'required|string|max:15',
         ]);
+
+        $perusahaan = Perusahaan::findOrFail($id);
         $perusahaan->update($validatedData);
+
         return redirect()->route('dataperusahaan.index')->with('success', 'Data berhasil diupdate!');
     }
     
