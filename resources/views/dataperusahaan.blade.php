@@ -10,7 +10,11 @@
     <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>Data Perusahaan</h2>
-            <a href="{{ route('dataperusahaan.create') }}" class="btn btn-primary">+ Tambah Data Perusahaan</a>
+            <div>
+                <a href="{{ route('dataperusahaan.pdf') }}" class="btn btn-danger">Export PDF</a>
+                <a href="{{ route('dataperusahaan.excel') }}" class="btn btn-success">Export Excel</a>
+                <a href="{{ route('dataperusahaan.create') }}" class="btn btn-primary">+ Tambah Data Perusahaan</a>
+            </div>
         </div>
 
         @if (session('success'))
