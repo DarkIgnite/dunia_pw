@@ -7,15 +7,20 @@ use Illuminate\Http\Request;
 
 class PerusahaanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $perusahaan = Perusahaan::all();
-        return view('dataperusahaan', compact('perusahaan'));
+        $perusahaan = Perusahaan::orderBy('id', 'desc')->get();
+
+        if ($request->wantsJson() || $request->is('api/*')) {
+            return response()->json($perusahaan);
+        }
+
+        return view('tesreact');
     }
 
     public function create()
     {
-        return view('pageinputdata');
+        return view('tesreact');
     }
 
     public function store(Request $request)
@@ -26,20 +31,30 @@ class PerusahaanController extends Controller
             'alamat' => 'required|string',
             'telepon' => 'required|string|max:15',
         ]);
-        Perusahaan::create($validatedData);
+
+        $perusahaan = Perusahaan::create($validatedData);
+
+        if ($request->wantsJson() || $request->is('api/*')) {
+            return response()->json(['message' => 'Data berhasil ditambahkan!', 'data' => $perusahaan], 201);
+        }
+
         return redirect()->route('dataperusahaan.index')->with('success', 'Data berhasil ditambahkan!');
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $perusahaan = Perusahaan::findOrFail($id);
-        return view('dataperusahaan.show', compact('perusahaan'));
+
+        if ($request->wantsJson() || $request->is('api/*')) {
+            return response()->json($perusahaan);
+        }
+
+        return view('tesreact');
     }
 
     public function edit($id)
     {
-        $perusahaan = Perusahaan::findOrFail($id);
-        return view('pageeditdata', compact('perusahaan'));
+        return view('tesreact');
     }   
 
     public function update(Request $request, $id)
@@ -54,14 +69,22 @@ class PerusahaanController extends Controller
         $perusahaan = Perusahaan::findOrFail($id);
         $perusahaan->update($validatedData);
 
+        if ($request->wantsJson() || $request->is('api/*')) {
+            return response()->json(['message' => 'Data berhasil diupdate!', 'data' => $perusahaan]);
+        }
+
         return redirect()->route('dataperusahaan.index')->with('success', 'Data berhasil diupdate!');
     }
     
 // fungsi destroy untuk menghapus data
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $perusahaan = Perusahaan::findOrFail($id);
         $perusahaan->delete();
+
+        if ($request->wantsJson() || $request->is('api/*')) {
+            return response()->json(['message' => 'Data berhasil dihapus!']);
+        }
 
         return redirect()->route('dataperusahaan.index')->with('success', 'Data berhasil dihapus!');
     }
